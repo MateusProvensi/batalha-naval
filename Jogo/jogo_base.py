@@ -214,7 +214,8 @@ while True:
         if continuar_obrigatoriamente:
             continue
         else:
-            continuar_jogar()
+            break
+    continuar_jogar()
     if continuar_a_jogar:
         print('\nQue bom que jogará mais!!! Pressione enter para continuar.')
         input()

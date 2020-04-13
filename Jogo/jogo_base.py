@@ -21,10 +21,7 @@ def definir_botes():
     for i in range(5):
         linha_bote_atual = randint(0, 9)
         coluna_bote_atual = randint(0, 9)
-        while tabuleiro_back[linha_bote_atual][coluna_bote_atual] == 'P' or \
-                tabuleiro_back[linha_bote_atual][coluna_bote_atual] == 'S' or \
-                tabuleiro_back[linha_bote_atual][coluna_bote_atual] == 'N' or \
-                tabuleiro_back[linha_bote_atual][coluna_bote_atual] == 'C':
+        while tabuleiro_back[linha_bote_atual][coluna_bote_atual] in ('P', 'S', 'B', 'N'):
             linha_bote_atual = randint(0, 9)
             coluna_bote_atual = randint(0, 9)
         tabuleiro_back[linha_bote_atual][coluna_bote_atual] = 'B'
@@ -36,10 +33,7 @@ def definir_submarino():
         linha_submarino = randint(0, 7)
         coluna_submarino = randint(0, 9)
         for i in range(3):
-            if tabuleiro_back[linha_submarino + i][coluna_submarino] == 'P' or \
-                    tabuleiro_back[linha_submarino + i][coluna_submarino] == 'B' or \
-                    tabuleiro_back[linha_submarino + i][coluna_submarino] == 'N' or \
-                    tabuleiro_back[linha_submarino + i][coluna_submarino] == 'C':
+            if tabuleiro_back[linha_submarino + i][coluna_submarino] in ('P', 'S', 'B', 'N'):
                 reiniciar_loop = True
                 break
             elif i == 2:
@@ -59,10 +53,7 @@ def definir_navio():
         linha_navio = randint(0, 9)
         coluna_navio = randint(0, 6)
         for i in range(4):
-            if tabuleiro_back[linha_navio][coluna_navio + i] == 'P' or \
-                    tabuleiro_back[linha_navio][coluna_navio + i] == 'S' or \
-                    tabuleiro_back[linha_navio][coluna_navio + i] == 'B' or \
-                    tabuleiro_back[linha_navio][coluna_navio + i] == 'N':
+            if tabuleiro_back[linha_navio][coluna_navio + i] in ('P', 'S', 'B', 'N'):
                 reiniciar_loop = True
                 break
             elif i == 3:
@@ -82,10 +73,7 @@ def definir_cargueiro():
         linha_cargueiro = randint(0, 9)
         coluna_cargueiro = randint(0, 4)
         for i in range(6):
-            if tabuleiro_back[linha_cargueiro][coluna_cargueiro + i] == 'P' or \
-                    tabuleiro_back[linha_cargueiro][coluna_cargueiro + i] == 'S' or \
-                    tabuleiro_back[linha_cargueiro][coluna_cargueiro + i] == 'B' or \
-                    tabuleiro_back[linha_cargueiro][coluna_cargueiro + i] == 'N':
+            if tabuleiro_back[linha_cargueiro][coluna_cargueiro + i] in ('P', 'S', 'B', 'N'):
                 reiniciar_loop = True
                 break
             elif i == 5:

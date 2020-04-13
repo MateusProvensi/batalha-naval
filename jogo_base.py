@@ -3,108 +3,122 @@ from time import sleep
 from os import system
 
 continuar = True
+reiniciar_loop = True
 
 
 def limpa_tela():
     system('cls')
 
 
-tabuleiro_back = [
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A'],
-    ['A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A', 'A']
-]
+def definir_porta_avioes():
+    linha_porta_avioes = randint(0, 4)
+    coluna_porta_avioes = randint(0, 9)
+    for i in range(5):
+        tabuleiro_back[linha_porta_avioes + i][coluna_porta_avioes] = 'P'
 
-tabuleiro_usuario = [
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*'],
-    ['*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*', '*']
-]
 
-contador = 0
-while True:
-    linha = randint(1, 15)
-    coluna = randint(1, 15)
-    if tabuleiro_back[coluna - 1][linha - 1] == 'N':
-        continue
-    else:
-        tabuleiro_back[coluna - 1][linha - 1] = 'N'
-        contador += 1
-    if contador == 100:
-        break
+def definir_botes():
+    for i in range(5):
+        linha_bote_atual = randint(0, 9)
+        coluna_bote_atual = randint(0, 9)
+        while tabuleiro_back[linha_bote_atual][coluna_bote_atual] == 'P' or \
+                tabuleiro_back[linha_bote_atual][coluna_bote_atual] == 'S' or \
+                tabuleiro_back[linha_bote_atual][coluna_bote_atual] == 'N' or \
+                tabuleiro_back[linha_bote_atual][coluna_bote_atual] == 'C':
+            linha_bote_atual = randint(0, 9)
+            coluna_bote_atual = randint(0, 9)
+        tabuleiro_back[linha_bote_atual][coluna_bote_atual] = 'B'
 
-# tabuleiro_back[coluna - 1][linha - 1] = 'N'
-# tabuleiro_back[coluna if coluna < 4 else coluna - 2][linha - 1] = 'N'
-# tabuleiro_back[coluna + 1 if coluna + 1 <= 4 else coluna - 3 if coluna - 3 > - 1 else coluna][linha - 1] = 'N'
 
-while continuar:
-    limpa_tela()
-    for coluna_mostrar in range(0, 15):
-        for linha_mostrar in range(0, 15):
-            print(f'{tabuleiro_usuario[linha_mostrar][coluna_mostrar]}', end=' ')
-        print()
+def definir_submarino():
+    global reiniciar_loop
+    while True:
+        linha_submarino = randint(0, 7)
+        coluna_submarino = randint(0, 9)
+        for i in range(3):
+            if tabuleiro_back[linha_submarino + i][coluna_submarino] == 'P' or \
+                    tabuleiro_back[linha_submarino + i][coluna_submarino] == 'B' or \
+                    tabuleiro_back[linha_submarino + i][coluna_submarino] == 'N' or \
+                    tabuleiro_back[linha_submarino + i][coluna_submarino] == 'C':
+                reiniciar_loop = True
+                break
+            elif i == 2:
+                reiniciar_loop = False
+                break
+        if reiniciar_loop:
+            continue
+        else:
+            for i in range(3):
+                tabuleiro_back[linha_submarino + i][coluna_submarino] = 'S'
+            break
 
-    jogada_coluna = input('Digite a coluna da sua jogada: ')
 
-    if not jogada_coluna.isnumeric():
-        print('Digite um número.')
-    if int(jogada_coluna) > 15 or int(jogada_coluna) <= 0:
-        print('Digite uma coluna válida')
-        sleep(1)
-        continue
+def definir_navio():
+    global reiniciar_loop
+    while True:
+        linha_navio = randint(0, 9)
+        coluna_navio = randint(0, 6)
+        for i in range(4):
+            if tabuleiro_back[linha_navio][coluna_navio + i] == 'P' or \
+                    tabuleiro_back[linha_navio][coluna_navio + i] == 'S' or \
+                    tabuleiro_back[linha_navio][coluna_navio + i] == 'B' or \
+                    tabuleiro_back[linha_navio][coluna_navio + i] == 'N':
+                reiniciar_loop = True
+                break
+            elif i == 3:
+                reiniciar_loop = False
+                break
+        if reiniciar_loop:
+            continue
+        else:
+            for i in range(4):
+                tabuleiro_back[linha_navio][coluna_navio + i] = 'N'
+            break
 
-    jogada_linha = input('Digite a linha da sua jogada: ')
 
-    if int(jogada_linha) > 15 or int(jogada_linha) <= 0:
-        print('Digite uma linha válida')
-        sleep(2)
-        continue
+def definir_cargueiro():
+    global reiniciar_loop
+    while True:
+        linha_cargueiro = randint(0, 9)
+        coluna_cargueiro = randint(0, 4)
+        for i in range(6):
+            if tabuleiro_back[linha_cargueiro][coluna_cargueiro + i] == 'P' or \
+                    tabuleiro_back[linha_cargueiro][coluna_cargueiro + i] == 'S' or \
+                    tabuleiro_back[linha_cargueiro][coluna_cargueiro + i] == 'B' or \
+                    tabuleiro_back[linha_cargueiro][coluna_cargueiro + i] == 'N':
+                reiniciar_loop = True
+                break
+            elif i == 5:
+                reiniciar_loop = False
+                break
+        if reiniciar_loop:
+            continue
+        else:
+            for i in range(6):
+                tabuleiro_back[linha_cargueiro][coluna_cargueiro + i] = 'C'
+            break
 
-    if tabuleiro_back[int(jogada_coluna) - 1][int(jogada_linha) - 1] == 'N':
-        tabuleiro_usuario[int(jogada_coluna) - 1][int(jogada_linha) - 1] = 'X'
-        print('Acertou um Navio!!!')
-        for coluna_mostrar in range(0, 15):
-            for linha_mostrar in range(0, 15):
-                print(f'{tabuleiro_usuario[linha_mostrar][coluna_mostrar]}', end=' ')
-            print()
-        sleep(2)
-    else:
-        tabuleiro_usuario[int(jogada_coluna) - 1][int(jogada_linha) - 1] = '#'
-        print('Foi no mar!!!')
-        for coluna_mostrar in range(0, 15):
-            for linha_mostrar in range(0, 15):
-                print(f'{tabuleiro_usuario[linha_mostrar][coluna_mostrar]}', end=' ')
-            print()
-        sleep(1)
 
-    for coluna_mostrar in range(0, 15):
-        for linha_mostrar in range(0, 15):
-            if tabuleiro_usuario[linha_mostrar][coluna_mostrar] == 'N':
-                continuar = True
+tabuleiro_back = []
+tabuleiro_usuario = []
 
-    if not continuar:
-        break
+for linha in range(10):
+    tabuleiro_back.append([])
+    tabuleiro_usuario.append([])
+    for coluna in range(10):
+        tabuleiro_back[linha].append(';')
+        tabuleiro_usuario[linha].append('#')
+
+definir_porta_avioes()
+definir_botes()
+definir_submarino()
+
+definir_navio()
+
+definir_cargueiro()
+
+for l in range(10):
+    for c in range(10):
+        print(tabuleiro_back[l][c], end=' ')
+    print()
+print('-=' * 25)

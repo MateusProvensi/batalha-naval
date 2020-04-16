@@ -2,10 +2,12 @@ from random import randint
 from time import sleep
 from os import system
 
+tem_barcos = True
 continuar_a_jogar = ''
 reiniciar_loop = True
-continuar_obrigatoriamente = linha_usuario = coluna_usuario = 0
-tipos_barcos = ('P', 'S', 'B', 'N')
+continuar_obrigatoriamente = True
+linha_coluna_usuario = pontos_usuario = 0
+tipos_barcos = ('P', 'S', 'B', 'N', 'C')
 
 
 def limpa_tela():
@@ -27,7 +29,7 @@ def definir_porta_avioes():
         if reiniciar_loop:
             continue
         else:
-            for i in range(3):
+            for i in range(5):
                 tabuleiro_back[linha_porta_avioes + i][coluna_porta_avioes] = 'P'
             break
 
@@ -117,60 +119,84 @@ def mostra_tabuleiro_usuario():
 
 
 def receber_verificar_jogada_usuario():
-    global linha_usuario, coluna_usuario
+    global linha_coluna_usuario
     while True:
         while True:
-            try:
-                linha_usuario = int(input('\nDigite a linha, começa em 1: ')) - 1
-            except ValueError:
-                print('Digite um número inteiro, por favor.')
+            linha_coluna_usuario = input('\nDigite a linha e a coluna, respectivamente, começa em 0: ').strip()
+            if not linha_coluna_usuario.isnumeric():
+                print('Digite primeiro a linha e depois a coluna, números, por favor.')
                 continue
-            if linha_usuario > 10 or linha_usuario < 1:
-                print('Digite uma linha válida.')
+            elif len(linha_coluna_usuario) != 2:
+                print('Você digitou valores a mais ou a menos, hein')
+                continue
             else:
                 break
-        while True:
-            try:
-                coluna_usuario = int(input('\nDigite a coluna, começa em 1: ')) - 1
-            except ValueError:
-                print('Digite um número inteiro, por favor.')
-                continue
-            if coluna_usuario > 10 or coluna_usuario < 1:
-                print('Digite uma coluna válida.')
-            else:
-                break
-        if tabuleiro_back[linha_usuario][coluna_usuario] in ('█', 'X'):
+
+        if tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] in ('█', 'X'):
             print('Você já jogou neste lugar, escolha outro.')
             continue
         else:
             break
 
 
+def verificando_se_ha_barcos_separadamente(silha_barco, nome_barco):
+    global tem_barcos
+    for linha_verificacao in tabuleiro_back:
+        if silha_barco in linha_verificacao:
+            print(f'Ainda há pedaços do {nome_barco}.')
+            tem_barcos = True
+            break
+        else:
+            tem_barcos = False
+    if not tem_barcos:
+        print(f'O {nome_barco} foi destruído por completo')
+
+
+def adicionar_tabuleiro():
+    tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] = 'X'
+    tabuleiro_usuario[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] = 'X'
+
+
 def verificar_se_acertou():
-    global continuar_obrigatoriamente
-    if tabuleiro_back[linha_usuario][coluna_usuario] in tipos_barcos:
-        if tabuleiro_back[linha_usuario][coluna_usuario] == 'P':
+    global continuar_obrigatoriamente, pontos_usuario, tem_barcos
+    if tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] in tipos_barcos:
+        if tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] == 'P':
             print('BOOOOM. Acertou um porta aviões!')
-        elif tabuleiro_back[linha_usuario][coluna_usuario] == 'N':
-            print('BOOOOM. Acertou um návio!')
-        elif tabuleiro_back[linha_usuario][coluna_usuario] == 'B':
+            adicionar_tabuleiro()
+            verificando_se_ha_barcos_separadamente('P', 'porta aviões')
+
+        elif tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] == 'N':
+            print('BOOOOM. Acertou um navio!')
+            adicionar_tabuleiro()
+            verificando_se_ha_barcos_separadamente('N', 'navio')
+
+        elif tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] == 'B':
             print('BOOOOM. Acertou um bote!')
-        elif tabuleiro_back[linha_usuario][coluna_usuario] == 'S':
+            adicionar_tabuleiro()
+            verificando_se_ha_barcos_separadamente('B', 'bote')
+
+        elif tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] == 'S':
             print('BOOOOM. Acertou um submarino!')
-        sleep(2)
-        tabuleiro_back[linha_usuario][coluna_usuario] = 'X'
-        tabuleiro_usuario[linha_usuario][coluna_usuario] = 'X'
+            adicionar_tabuleiro()
+            verificando_se_ha_barcos_separadamente('S', 'submarino')
+
+        elif tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] == 'C':
+            print('BOOOOM. Acertou um cargueiro!')
+            adicionar_tabuleiro()
+            verificando_se_ha_barcos_separadamente('C', 'cargueiro')
+        sleep(3)
+        pontos_usuario += 1
+
     else:
         print('BOOOOM... na água.')
-        tabuleiro_usuario[linha_usuario][coluna_usuario] = '█'
-        tabuleiro_back[linha_usuario][coluna_usuario] = '█'
-        sleep(2)
-    for linha_verificacao_vitoria in range(10):
-        for coluna_verificacao_vitoria in range(10):
-            if tabuleiro_back[linha_verificacao_vitoria][coluna_verificacao_vitoria] in tipos_barcos:
-                continuar_obrigatoriamente += 1
-                break
-    print('Parabéns, você ganhouu!!')
+        tabuleiro_usuario[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] = '█'
+        tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] = '█'
+        sleep(3)
+    if pontos_usuario == 23:
+        print('\nParabéns, você ganhouu!!\n')
+        continuar_obrigatoriamente = False
+    else:
+        continuar_obrigatoriamente = True
 
 
 def continuar_jogar():
@@ -187,6 +213,7 @@ def continuar_jogar():
 
 while True:
     limpa_tela()
+    print()
     tabuleiro_back = []
     tabuleiro_usuario = []
 
@@ -195,7 +222,7 @@ while True:
         tabuleiro_usuario.append([])
         for coluna in range(10):
             tabuleiro_back[linha].append('A')
-            tabuleiro_usuario[linha].append('#')
+            tabuleiro_usuario[linha].append('*')
 
     definir_porta_avioes()
     definir_botes()

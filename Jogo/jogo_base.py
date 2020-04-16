@@ -112,7 +112,12 @@ def mostra_tabuleiro_no_teste():
 
 
 def mostra_tabuleiro_usuario():
+    print(
+        '    0 1 2 3 4 5 6 7 8 9\n'
+        '    ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓ ↓'
+    )
     for linha_mostrando_usuario in range(10):
+        print(linha_mostrando_usuario, end=' → ')
         for coluna_mostrando_usuario in range(10):
             print(tabuleiro_usuario[linha_mostrando_usuario][coluna_mostrando_usuario], end=' ')
         print()
@@ -199,6 +204,13 @@ def verificar_se_acertou():
         continuar_obrigatoriamente = True
 
 
+def jogada_pc():
+    linha_pc = randint(0, 9)
+    coluna_pc = randint(0, 9)
+    tabuleiro_back[linha_pc][coluna_pc] = 'X'
+    tabuleiro_usuario[linha_pc][coluna_pc] = 'X'
+
+
 def continuar_jogar():
     global continuar_a_jogar
     continuar_a_jogar = input('Deseja continuar jogando[S/N]? ').strip().upper()
@@ -211,9 +223,10 @@ def continuar_jogar():
         continuar_a_jogar = False
 
 
+vez = 'usuario'
+
 while True:
     limpa_tela()
-    print()
     tabuleiro_back = []
     tabuleiro_usuario = []
 
@@ -229,19 +242,20 @@ while True:
     definir_submarino()
     definir_navio()
     definir_cargueiro()
-
-    while True:
-        mostra_tabuleiro_no_teste()
-        print('-=' * 25)
-        mostra_tabuleiro_usuario()
-        print('-=' * 25)
-        receber_verificar_jogada_usuario()
-        print()
-        verificar_se_acertou()
-        if continuar_obrigatoriamente:
-            continue
-        else:
-            break
+    if vez == 'usuario':
+        while True:
+            limpa_tela()
+            mostra_tabuleiro_no_teste()
+            print('-=' * 25)
+            mostra_tabuleiro_usuario()
+            print('-=' * 25)
+            receber_verificar_jogada_usuario()
+            print()
+            verificar_se_acertou()
+            if continuar_obrigatoriamente:
+                continue
+            else:
+                break
     continuar_jogar()
     if continuar_a_jogar:
         print('\nQue bom que jogará mais!!! Pressione enter para continuar.')

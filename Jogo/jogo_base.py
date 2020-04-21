@@ -19,6 +19,42 @@ def limpa_tela():
     system('cls')
 
 
+def menu():
+    while True:
+        print('-=' * 20)
+        print(
+            '1 - Iniciar o jogo\n'
+            '2 - Instruções\n'
+            '3 - Sair'
+        )
+        print('-=' * 20)
+        escolha = input('Digite sua opção: ')
+        if escolha == '1':
+            input('Pressione enter para iniciar')
+            break
+        elif escolha == '2':
+            instrucoes()
+        elif escolha == '3':
+            print('Saindo...')
+            sleep(2)
+            exit()
+        else:
+            print('Digite algo válido.')
+
+
+def instrucoes():
+    print('\n1 - O jogo inicia com você adicionando seus barcos no tabuleiro, só será necessário que você digite a '
+          'primeira casa do barco\n'
+          '2 - Para dar um tiro no mar, será necessário que você digite primeiro a linha e depois a coluna, r'
+          'espectivamente\n'
+          '3 - Segue agora um informativo de quantas casa cada barco ocupa:\n'
+          '    Porta aviões: 5 casas\n'
+          '    Bote: 5 botes mas ocupam somente uma casa\n'
+          '    Submarino: 3 casas\n'
+          '    Navio: 4 casas\n'
+          '    Cargueiro: 6 casas\n')
+
+
 def definir_porta_avioes():
     global reiniciar_loop
     while True:
@@ -142,11 +178,11 @@ def verificacao_linha_coluna_posicionamento_usuario(nome_do_barco: str, sigla_ba
         else:
             if int(linha_coluna_barco_usuario[0]) > max_linha or int(linha_coluna_barco_usuario[0]) < min_linha:
                 print('Se ele começar ai, cairá para fora do tabuleiro, tente outra linha')
-                sleep(2)
+                sleep(1)
                 continue
             if int(linha_coluna_barco_usuario[1]) > max_coluna or int(linha_coluna_barco_usuario[1]) < min_coluna:
                 print('Se ele começar ai, cairá para fora do tabuleiro, tente outra coluna')
-                sleep(2)
+                sleep(1)
                 continue
             else:
                 for i in range(tamanho_barco):
@@ -161,7 +197,7 @@ def verificacao_linha_coluna_posicionamento_usuario(nome_do_barco: str, sigla_ba
                         break
                 if reiniciar_loop:
                     print('Existe um barco neste caminho, por favor, encontre outro.')
-                    sleep(2)
+                    sleep(1)
                     continue
                 else:
                     for i in range(tamanho_barco):
@@ -338,14 +374,14 @@ def verificar_se_acertou():
             print('BOOOOM. Acertou um cargueiro!')
             adicionar_tabuleiro()
             verificando_se_ha_barcos_separadamente('C', 'cargueiro')
-        sleep(3)
+        sleep(2)
         pontos_usuario += 1
 
     else:
         print('BOOOOM... na água.')
         tabuleiro_pc_mostrar_usuario[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] = '█'
         tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] = '█'
-        sleep(3)
+        sleep(2)
     if pontos_usuario == 23:
         print('\nParabéns, você ganhouu!!\n')
         continuar_obrigatoriamente_usuario = False
@@ -361,9 +397,8 @@ def jogada_pc():
         if tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] in ('X', '█'):
             continue
         print(f'O PC jogou na linha {linha_pc} e coluna {coluna_pc}...')
-        sleep(2)
+        sleep(1)
         if tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] in tipos_barcos:
-            tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] = 'X'
             if tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] == 'P':
                 print('BOOOM... o pc acertou um porta aviões.')
             elif tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] == 'B':
@@ -374,7 +409,8 @@ def jogada_pc():
                 print('BOOOM... o pc acertou um navio.')
             elif tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] == 'C':
                 print('BOOOM... o pc acertou um cargueiro.')
-            sleep(3)
+            tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] = 'X'
+            sleep(2)
             pontos_pc += 1
             if pontos_pc == 23:
                 print('Que pena, você perdeu! Tente novamente')
@@ -401,6 +437,7 @@ def continuar_jogar():
 
 
 while True:
+    menu()
     limpa_tela()
     tabuleiro_back = []
     tabuleiro_pc_mostrar_usuario = []
@@ -446,11 +483,11 @@ while True:
             print('Aqui está seu tabuleiro: \n')
             mostrar_tabuleiro_posicionamento_usuario()
             print('-=' * 25)
-            sleep(3)
+            sleep(2)
             print('Aqui está o tabuleiro do PC: \n')
             mostra_tabuleiro_usuario()
             print('-=' * 25)
-            sleep(3)
+            sleep(2)
             receber_verificar_jogada_usuario()
             print()
             verificar_se_acertou()

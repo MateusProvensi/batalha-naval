@@ -1,7 +1,7 @@
 from random import randint
 from time import sleep
 from os import system
-from playsound import playsound
+import playsound
 
 tem_barcos = True
 continuar_a_jogar = ''
@@ -169,19 +169,23 @@ def verificacao_linha_coluna_posicionamento_usuario(nome_do_barco: str, sigla_ba
                                            f'inicio do seu {nome_do_barco}: ').strip()
         if not linha_coluna_barco_usuario.isnumeric():
             print('Digite primeiro a linha e depois a coluna, números, por favor.')
+            playsound.playsound('coordenadainexistente.m4a')
             sleep(1)
             continue
         elif len(linha_coluna_barco_usuario) != 2:
             print('Você digitou valores a mais ou a menos, hein')
+            playsound.playsound('coordenadainexistente.m4a')
             sleep(1)
             continue
         else:
             if int(linha_coluna_barco_usuario[0]) > max_linha or int(linha_coluna_barco_usuario[0]) < min_linha:
                 print('Se ele começar ai, cairá para fora do tabuleiro, tente outra linha')
+                playsound.playsound('caminhoobstruido.m4a')
                 sleep(1)
                 continue
             if int(linha_coluna_barco_usuario[1]) > max_coluna or int(linha_coluna_barco_usuario[1]) < min_coluna:
                 print('Se ele começar ai, cairá para fora do tabuleiro, tente outra coluna')
+                playsound.playsound('caminhoobstruido.m4a')
                 sleep(1)
                 continue
             else:
@@ -192,11 +196,12 @@ def verificacao_linha_coluna_posicionamento_usuario(nome_do_barco: str, sigla_ba
                             tipos_barcos:
                         reiniciar_loop = True
                         break
-                    elif i == 4:
+                    elif i == tamanho_barco - 1:
                         reiniciar_loop = False
                         break
                 if reiniciar_loop:
                     print('Existe um barco neste caminho, por favor, encontre outro.')
+                    playsound.playsound('caminhoobstruido.m4a')
                     sleep(1)
                     continue
                 else:
@@ -226,16 +231,19 @@ def adicionando_botes_do_usuario():
                                            f'{numero_bote}º Bote: ').strip()
         if not linha_coluna_barco_usuario.isnumeric():
             print('Digite primeiro a linha e depois a coluna, números, por favor.')
-            sleep(1)
+            playsound.playsound('coordenadainexistente.m4a')
+            sleep(0.5)
             continue
         elif len(linha_coluna_barco_usuario) != 2:
             print('Você digitou valores a mais ou a menos, hein')
-            sleep(1)
+            playsound.playsound('coordenadainexistente.m4a')
+            sleep(0.5)
             continue
         else:
             if tabuleiro_posicionamento_usuario[int(linha_coluna_barco_usuario[0])][int(
                     linha_coluna_barco_usuario[1])] in tipos_barcos:
                 print('Esse lugar já está ocupado, tente outro.')
+                playsound.playsound('caminhoobstruido.m4a')
                 sleep(1)
                 continue
             else:
@@ -308,15 +316,18 @@ def receber_verificar_jogada_usuario():
                                          'inimigo: ').strip()
             if not linha_coluna_usuario.isnumeric():
                 print('Digite primeiro a linha e depois a coluna, números, por favor.')
+                playsound.playsound('coordenadainexistente.m4a')
                 continue
             elif len(linha_coluna_usuario) != 2:
                 print('Você digitou valores a mais ou a menos, hein')
+                playsound.playsound('coordenadainexistente.m4a')
                 continue
             else:
                 break
 
         if tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] in ('█', 'X'):
             print('Você já jogou neste lugar, escolha outro.')
+            playsound.playsound('coordenadaatingida.m4a')
             continue
         else:
             break
@@ -345,36 +356,42 @@ def verificar_se_acertou():
     if tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] in tipos_barcos:
         if tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] == 'P':
             print('BOOOOM. Acertou um porta aviões!')
+            playsound.playsound('pinimigo.m4a')
             adicionar_tabuleiro()
             verificando_se_ha_barcos_separadamente('P', 'porta aviões')
 
         elif tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] == 'N':
             print('BOOOOM. Acertou um navio!')
+            playsound.playsound('ninimigo.m4a')
             adicionar_tabuleiro()
             verificando_se_ha_barcos_separadamente('N', 'navio')
 
         elif tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] == 'B':
             print('BOOOOM. Acertou um bote!')
+            playsound.playsound('binimigo.m4a')
             adicionar_tabuleiro()
             verificando_se_ha_barcos_separadamente('B', 'bote')
 
         elif tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] == 'S':
             print('BOOOOM. Acertou um submarino!')
+            playsound.playsound('sinimigo.m4a')
             adicionar_tabuleiro()
             verificando_se_ha_barcos_separadamente('S', 'submarino')
 
         elif tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] == 'C':
             print('BOOOOM. Acertou um cargueiro!')
+            playsound.playsound('cinimigo.m4a')
             adicionar_tabuleiro()
             verificando_se_ha_barcos_separadamente('C', 'cargueiro')
-        sleep(2)
+        sleep(1)
         pontos_usuario += 1
 
     else:
         print('BOOOOM... na água.')
         tabuleiro_pc_mostrar_usuario[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] = '█'
         tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] = '█'
-        sleep(2)
+        playsound.playsound('tiroagua.m4a')
+        sleep(0.5)
     if pontos_usuario == 23:
         print('\nParabéns, você ganhouu!!\n')
         continuar_obrigatoriamente_usuario = False
@@ -394,16 +411,21 @@ def jogada_pc():
         if tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] in tipos_barcos:
             if tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] == 'P':
                 print('BOOOM... o pc acertou um porta aviões.')
+                playsound.playsound('paliado.m4a')
             elif tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] == 'B':
                 print('BOOOM... o pc acertou um bote.')
+                playsound.playsound('baliado.m4a')
             elif tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] == 'S':
                 print('BOOOM... o pc acertou um submarino.')
+                playsound.playsound('saliado.m4a')
             elif tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] == 'N':
                 print('BOOOM... o pc acertou um navio.')
+                playsound.playsound('naliado.m4a')
             elif tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] == 'C':
                 print('BOOOM... o pc acertou um cargueiro.')
+                playsound.playsound('caliado.m4a')
             tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] = 'X'
-            sleep(2)
+            sleep(0.5)
             pontos_pc += 1
             if pontos_pc == 23:
                 print('Que pena, você perdeu! Tente novamente')
@@ -413,7 +435,8 @@ def jogada_pc():
         else:
             tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] = '█'
             print('BOOOM... na água')
-            sleep(3)
+            playsound.playsound('tiroagua.m4a')
+            sleep(0.5)
             break
 
 
@@ -453,6 +476,7 @@ while True:
     definir_cargueiro()
     if True:
         print('Antes de tudo, vamos definir onde ficarão os seus barcos.\n')
+        playsound.playsound('definirbarcos.m4a')
         adicionando_porta_avioes_do_usuario()
         adicionando_botes_do_usuario()
         adicionando_submarino_do_usuario()
@@ -462,24 +486,23 @@ while True:
         mostrar_tabuleiro_posicionamento_usuario()
         sleep(1)
         print('Preparado?')
+        playsound.playsound('preparado.m4a')
         print('3')
-        sleep(1)
+        playsound.playsound('tres.m4a')
         print('2')
-        sleep(1)
+        playsound.playsound('dois.m4a')
         print('1')
-        sleep(1)
+        playsound.playsound('um.m4a')
         print('BATALHA!')
-        sleep(0.5)
+        playsound.playsound('batalha.m4a')
         while True:
             limpa_tela()
             print('Aqui está seu tabuleiro: \n')
             mostrar_tabuleiro_posicionamento_usuario()
             print('-=' * 25)
-            sleep(2)
             print('Aqui está o tabuleiro do PC: \n')
             mostra_tabuleiro_usuario()
             print('-=' * 25)
-            sleep(2)
             receber_verificar_jogada_usuario()
             print()
             verificar_se_acertou()

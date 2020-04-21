@@ -1,6 +1,7 @@
 from random import randint
 from time import sleep
 from os import system
+from playsound import playsound
 
 tem_barcos = True
 continuar_a_jogar = ''
@@ -110,6 +111,7 @@ def definir_cargueiro():
 
 def definir_sentido():
     global sentido
+    mostrar_tabuleiro_posicionamento_usuario()
     while True:
         sentido = input('Digite o sentido do seu barco [H/V]: ').strip().upper()
         if sentido not in ('H', 'V'):
@@ -127,7 +129,6 @@ def verificacao_linha_coluna_posicionamento_usuario(nome_do_barco: str, sigla_ba
                                                     max_linha: int, min_coluna: int, max_coluna: int, tamanho_barco: int):
     global linha_coluna_barco_usuario, reiniciar_loop, sentido
     while True:
-        mostrar_tabuleiro_posicionamento_usuario()
         linha_coluna_barco_usuario = input(f'\nDigite a linha e a coluna, respectivamente, de onde ficará o '
                                            f'inicio do seu {nome_do_barco}: ').strip()
         if not linha_coluna_barco_usuario.isnumeric():
@@ -160,6 +161,7 @@ def verificacao_linha_coluna_posicionamento_usuario(nome_do_barco: str, sigla_ba
                         break
                 if reiniciar_loop:
                     print('Existe um barco neste caminho, por favor, encontre outro.')
+                    sleep(2)
                     continue
                 else:
                     for i in range(tamanho_barco):
@@ -173,9 +175,9 @@ def adicionando_porta_avioes_do_usuario():
     print('Agora é a vez do porta-aviões...')
     definir_sentido()
     if sentido == 'H':
-        verificacao_linha_coluna_posicionamento_usuario('porta aviões', 'P', 0, 5, 0, 9, 5)
-    else:
         verificacao_linha_coluna_posicionamento_usuario('porta aviões', 'P', 0, 9, 0, 5, 5)
+    else:
+        verificacao_linha_coluna_posicionamento_usuario('porta aviões', 'P', 0, 5, 0, 9, 5)
 
 
 def adicionando_botes_do_usuario():
@@ -206,6 +208,36 @@ def adicionando_botes_do_usuario():
                 numero_bote += 1
                 if numero_bote == 6:
                     break
+
+
+def adicionando_submarino_do_usuario():
+    limpa_tela()
+    print('Agora é a vez do submarino...')
+    definir_sentido()
+    if sentido == 'H':
+        verificacao_linha_coluna_posicionamento_usuario('submarino', 'S', 0, 9, 0, 7, 3)
+    else:
+        verificacao_linha_coluna_posicionamento_usuario('submarino', 'S', 0, 7, 0, 9, 3)
+
+
+def adicionando_navio_do_usuario():
+    limpa_tela()
+    print('Agora é a vez do navio...')
+    definir_sentido()
+    if sentido == 'H':
+        verificacao_linha_coluna_posicionamento_usuario('navio', 'N', 0, 9, 0, 6, 4)
+    else:
+        verificacao_linha_coluna_posicionamento_usuario('navio', 'N', 0, 6, 0, 9, 4)
+
+
+def adicionando_cargueiro_do_usuario():
+    limpa_tela()
+    print('Agora é a vez do seu cargueiro...')
+    definir_sentido()
+    if sentido == 'H':
+        verificacao_linha_coluna_posicionamento_usuario('cargueiro', 'C', 0, 9, 0, 4, 6)
+    else:
+        verificacao_linha_coluna_posicionamento_usuario('cargueiro', 'C', 0, 4, 0, 9, 6)
 
 
 def mostrar_tabuleiro_posicionamento_usuario():
@@ -243,7 +275,8 @@ def receber_verificar_jogada_usuario():
     global linha_coluna_usuario
     while True:
         while True:
-            linha_coluna_usuario = input('\nDigite a linha e a coluna, respectivamente, para acertar um barco inimigo: ').strip()
+            linha_coluna_usuario = input('\nDigite a linha e a coluna, respectivamente, para acertar um barco '
+                                         'inimigo: ').strip()
             if not linha_coluna_usuario.isnumeric():
                 print('Digite primeiro a linha e depois a coluna, números, por favor.')
                 continue
@@ -331,7 +364,16 @@ def jogada_pc():
         sleep(2)
         if tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] in tipos_barcos:
             tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] = 'X'
-            print('BOOOM... o pc acertou um barco')
+            if tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] == 'P':
+                print('BOOOM... o pc acertou um porta aviões.')
+            elif tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] == 'B':
+                print('BOOOM... o pc acertou um bote.')
+            elif tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] == 'S':
+                print('BOOOM... o pc acertou um submarino.')
+            elif tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] == 'N':
+                print('BOOOM... o pc acertou um navio.')
+            elif tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] == 'C':
+                print('BOOOM... o pc acertou um cargueiro.')
             sleep(3)
             pontos_pc += 1
             if pontos_pc == 23:
@@ -383,6 +425,11 @@ while True:
         print('Antes de tudo, vamos definir onde ficarão os seus barcos.\n')
         adicionando_porta_avioes_do_usuario()
         adicionando_botes_do_usuario()
+        adicionando_submarino_do_usuario()
+        adicionando_navio_do_usuario()
+        adicionando_cargueiro_do_usuario()
+        print('Seu tabuleiro ficou da seguinte forma:\n')
+        mostrar_tabuleiro_posicionamento_usuario()
         sleep(1)
         print('Preparado?')
         print('3')

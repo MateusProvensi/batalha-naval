@@ -288,13 +288,6 @@ def mostrar_tabuleiro_posicionamento_usuario():
         print()
 
 
-def mostra_tabuleiro_no_teste():
-    for linha_teste in range(10):
-        for coluna_teste in range(10):
-            print(tabuleiro_back[linha_teste][coluna_teste], end=' ')
-        print()
-
-
 def mostra_tabuleiro_usuario():
     print(
         '    0 1 2 3 4 5 6 7 8 9\n'
@@ -479,7 +472,6 @@ while True:
         sleep(0.5)
         while True:
             limpa_tela()
-            # mostra_tabuleiro_no_teste()
             print('Aqui está seu tabuleiro: \n')
             mostrar_tabuleiro_posicionamento_usuario()
             print('-=' * 25)

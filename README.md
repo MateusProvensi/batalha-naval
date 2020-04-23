@@ -1,2 +1,2 @@
-# batalha-naval
- Este jogo é uma batalha naval, da qual foi produzido para fins educacionais. EM PRODUÇÃO
+# Batalha naval
+ Este jogo é uma batalha naval, foi produzido para fins educacionais na matéria de introdução a lógica de programação.

@@ -55,24 +55,29 @@ def instrucoes():
           '    Cargueiro: 6 casas\n')
 
 
-def definir_porta_avioes():
+def definir_barcos_pc(tamanha_barco: int, sigla_barco: str, min_linha: int, max_linha: int,
+                      min_coluna: int, max_coluna: int):
     global reiniciar_loop
     while True:
-        linha_porta_avioes = randint(0, 4)
-        coluna_porta_avioes = randint(0, 9)
-        for i in range(5):
-            if tabuleiro_back[linha_porta_avioes + i][coluna_porta_avioes] in tipos_barcos:
+        linha_barco_pc = randint(min_linha, max_linha)
+        coluna_barco_pc = randint(min_coluna, max_coluna)
+        for i in range(tamanha_barco):
+            if tabuleiro_back[linha_barco_pc + i][coluna_barco_pc] in tipos_barcos:
                 reiniciar_loop = True
                 break
-            elif i == 4:
+            elif i == tamanha_barco - 1:
                 reiniciar_loop = False
                 break
         if reiniciar_loop:
             continue
         else:
-            for i in range(5):
-                tabuleiro_back[linha_porta_avioes + i][coluna_porta_avioes] = 'P'
+            for i in range(tamanha_barco):
+                tabuleiro_back[linha_barco_pc + i][coluna_barco_pc] = sigla_barco
             break
+
+
+def definir_porta_avioes():
+    definir_barcos_pc(5, 'P', 0, 4, 0, 9)
 
 
 def definir_botes():
@@ -86,63 +91,15 @@ def definir_botes():
 
 
 def definir_submarino():
-    global reiniciar_loop
-    while True:
-        linha_submarino = randint(0, 7)
-        coluna_submarino = randint(0, 9)
-        for i in range(3):
-            if tabuleiro_back[linha_submarino + i][coluna_submarino] in tipos_barcos:
-                reiniciar_loop = True
-                break
-            elif i == 2:
-                reiniciar_loop = False
-                break
-        if reiniciar_loop:
-            continue
-        else:
-            for i in range(3):
-                tabuleiro_back[linha_submarino + i][coluna_submarino] = 'S'
-            break
+    definir_barcos_pc(3, 'S', 0, 7, 0, 9)
 
 
 def definir_navio():
-    global reiniciar_loop
-    while True:
-        linha_navio = randint(0, 9)
-        coluna_navio = randint(0, 6)
-        for i in range(4):
-            if tabuleiro_back[linha_navio][coluna_navio + i] in tipos_barcos:
-                reiniciar_loop = True
-                break
-            elif i == 3:
-                reiniciar_loop = False
-                break
-        if reiniciar_loop:
-            continue
-        else:
-            for i in range(4):
-                tabuleiro_back[linha_navio][coluna_navio + i] = 'N'
-            break
+    definir_barcos_pc(4, 'N', 0, 9, 0, 6)
 
 
 def definir_cargueiro():
-    global reiniciar_loop
-    while True:
-        linha_cargueiro = randint(0, 9)
-        coluna_cargueiro = randint(0, 4)
-        for i in range(6):
-            if tabuleiro_back[linha_cargueiro][coluna_cargueiro + i] in tipos_barcos:
-                reiniciar_loop = True
-                break
-            elif i == 5:
-                reiniciar_loop = False
-                break
-        if reiniciar_loop:
-            continue
-        else:
-            for i in range(6):
-                tabuleiro_back[linha_cargueiro][coluna_cargueiro + i] = 'C'
-            break
+    definir_barcos_pc(6, 'C', 0, 9, 0, 4)
 
 
 def definir_sentido():
@@ -162,7 +119,8 @@ def definir_sentido():
 
 
 def verificacao_linha_coluna_posicionamento_usuario(nome_do_barco: str, sigla_barco: str, min_linha: int,
-                                                    max_linha: int, min_coluna: int, max_coluna: int, tamanho_barco: int):
+                                                    max_linha: int, min_coluna: int, max_coluna: int,
+                                                    tamanho_barco: int):
     global linha_coluna_barco_usuario, reiniciar_loop, sentido
     while True:
         linha_coluna_barco_usuario = input(f'\nDigite a linha e a coluna, respectivamente, de onde ficará o '

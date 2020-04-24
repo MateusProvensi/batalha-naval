@@ -140,7 +140,7 @@ def verificacao_linha_coluna_posicionamento_usuario(nome_do_barco: str, sigla_ba
                 print('Se ele começar ai, cairá para fora do tabuleiro, tente outra linha')
                 playsound.playsound('caminhoobstruido.m4a')
                 sleep(1)
-                continue
+                continue11
             if int(linha_coluna_barco_usuario[1]) > max_coluna or int(linha_coluna_barco_usuario[1]) < min_coluna:
                 print('Se ele começar ai, cairá para fora do tabuleiro, tente outra coluna')
                 playsound.playsound('caminhoobstruido.m4a')
@@ -348,7 +348,7 @@ def verificar_se_acertou():
         print('BOOOOM... na água.')
         tabuleiro_pc_mostrar_usuario[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] = '█'
         tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] = '█'
-        playsound.playsound('tiroagua.m4a')
+        #playsound.playsound('tiroagua.m4a')
         sleep(0.5)
     if pontos_usuario == 23:
         print('\nParabéns, você ganhouu!!\n')

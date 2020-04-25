@@ -56,13 +56,14 @@ def instrucoes():
 
 
 def definir_barcos_pc(tamanha_barco: int, sigla_barco: str, min_linha: int, max_linha: int,
-                      min_coluna: int, max_coluna: int):
+                      min_coluna: int, max_coluna: int, sentido_pc: str):
     global reiniciar_loop
     while True:
         linha_barco_pc = randint(min_linha, max_linha)
         coluna_barco_pc = randint(min_coluna, max_coluna)
         for i in range(tamanha_barco):
-            if tabuleiro_back[linha_barco_pc + i][coluna_barco_pc] in tipos_barcos:
+            if tabuleiro_back[linha_barco_pc + (i if sentido_pc == 'V' else 0)][coluna_barco_pc + (
+                    i if sentido_pc == 'H' else 0)] in tipos_barcos:
                 reiniciar_loop = True
                 break
             elif i == tamanha_barco - 1:
@@ -72,12 +73,13 @@ def definir_barcos_pc(tamanha_barco: int, sigla_barco: str, min_linha: int, max_
             continue
         else:
             for i in range(tamanha_barco):
-                tabuleiro_back[linha_barco_pc + i][coluna_barco_pc] = sigla_barco
+                tabuleiro_back[linha_barco_pc + (i if sentido_pc == 'V' else 0)][coluna_barco_pc + (
+                    i if sentido_pc == 'H' else 0)] = sigla_barco
             break
 
 
 def definir_porta_avioes():
-    definir_barcos_pc(5, 'P', 0, 4, 0, 9)
+    definir_barcos_pc(5, 'P', 0, 4, 0, 9, 'V')
 
 
 def definir_botes():
@@ -91,15 +93,15 @@ def definir_botes():
 
 
 def definir_submarino():
-    definir_barcos_pc(3, 'S', 0, 7, 0, 9)
+    definir_barcos_pc(3, 'S', 0, 7, 0, 9, 'V')
 
 
 def definir_navio():
-    definir_barcos_pc(4, 'N', 0, 9, 0, 6)
+    definir_barcos_pc(4, 'N', 0, 9, 0, 6, 'H')
 
 
 def definir_cargueiro():
-    definir_barcos_pc(6, 'C', 0, 9, 0, 4)
+    definir_barcos_pc(6, 'C', 0, 9, 0, 4, 'H')
 
 
 def definir_sentido():
@@ -140,7 +142,7 @@ def verificacao_linha_coluna_posicionamento_usuario(nome_do_barco: str, sigla_ba
                 print('Se ele começar ai, cairá para fora do tabuleiro, tente outra linha')
                 playsound.playsound('caminhoobstruido.m4a')
                 sleep(1)
-                continue11
+                continue
             if int(linha_coluna_barco_usuario[1]) > max_coluna or int(linha_coluna_barco_usuario[1]) < min_coluna:
                 print('Se ele começar ai, cairá para fora do tabuleiro, tente outra coluna')
                 playsound.playsound('caminhoobstruido.m4a')
@@ -348,7 +350,6 @@ def verificar_se_acertou():
         print('BOOOOM... na água.')
         tabuleiro_pc_mostrar_usuario[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] = '█'
         tabuleiro_back[int(linha_coluna_usuario[0])][int(linha_coluna_usuario[1])] = '█'
-        #playsound.playsound('tiroagua.m4a')
         sleep(0.5)
     if pontos_usuario == 23:
         print('\nParabéns, você ganhouu!!\n')
@@ -393,7 +394,6 @@ def jogada_pc():
         else:
             tabuleiro_posicionamento_usuario[linha_pc][coluna_pc] = '█'
             print('BOOOM... na água')
-            playsound.playsound('tiroagua.m4a')
             sleep(0.5)
             break
 

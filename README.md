@@ -40,4 +40,6 @@ git clone https://github.com/MateusProvensi/batalha-naval.git
 playsound.playsound()
 ```
 
+The code is in Brazilian Portuguese, because it's my primary language.
+
 # Have Fun

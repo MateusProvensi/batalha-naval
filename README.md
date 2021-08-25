@@ -6,7 +6,7 @@ Battleship is a strategy game. It is played on paper or board, in this case, wil
 
 ### 🎮🕹How to play
 
-In this game version, there are five ships type, each one has a specific number of houses, there are:
+#### In this game version, there are five ships type, each one has a specific number of houses, there are:
 
 | Ship Type  | Number of Houses |
 | :-------------: |:-------------:|
@@ -16,7 +16,7 @@ In this game version, there are five ships type, each one has a specific number 
 | Navio(N)      | 4     |
 | Cargueiro(C)      | 6     |
 
-It is understood:
+#### It is understood:
 
 - Porta-Aviões(P) as Aircraft carrier
 - Submarino(S) as Submarine
@@ -24,7 +24,7 @@ It is understood:
 - Navio(N) as Ship
 - Cargueiro(C) as Cargo Ship
 
-It is noteworthy that there are 5 boats.
+#### It is noteworthy that there are 5 boats.
 
 ### 👨‍💻👩‍💻How Can I put in my machine?
 

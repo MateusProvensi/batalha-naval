@@ -1,10 +1,10 @@
-# Battleship
+# Battleship 🚢🆚⛴
 
-### Preview
+### 📚Preview
 
 Battleship is a strategy game. It is played on paper or board, in this case, will be use the computer console. The game objective is to destroy all your opponent's ship.
 
-### How to play
+### 🎮🕹How to play
 
 In this game version, there are five ships type, each one has a specific number of houses, there are:
 
@@ -26,15 +26,13 @@ It is understood:
 
 It is noteworthy that there are 5 boats.
 
-### How Can I put in my machine?
+### 👨‍💻👩‍💻How Can I put in my machine?
 
 1. Clone this repository with the command:
 ```
 git clone https://github.com/MateusProvensi/batalha-naval.git
 ```
-
 1. Now, you just need run the file 'jogo_base.py'
-
 1. It is noteworthy that if it does not work, you will need to delete all lines that use the function:
 ```
 playsound.playsound()

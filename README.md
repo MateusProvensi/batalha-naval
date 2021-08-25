@@ -32,8 +32,10 @@ It is noteworthy that there are 5 boats.
 ```
 git clone https://github.com/MateusProvensi/batalha-naval.git
 ```
-1. Now, you just need run the file 'jogo_base.py'
-1. It is noteworthy that if it does not work, you will need to delete all lines that use the function:
+
+2. Now, you just need run the file 'jogo_base.py'
+
+3. It is noteworthy that if it does not work, you will need to delete all lines that use the function:
 ```
 playsound.playsound()
 ```
